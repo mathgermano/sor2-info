@@ -1,0 +1,50 @@
+1) O que é um proxy reverso ?
+
+Um proxy reverso, também conhecido como reverse proxy em inglês, é um servidor intermediário que atua em nome de outros servidores ou recursos da rede. Ele recebe solicitações de clientes e encaminha essas solicitações para o servidor de destino correspondente, retornando as respostas para os clientes.
+
+Ao contrário de um proxy convencional, que encaminha solicitações de clientes para a Internet, um proxy reverso gerencia a comunicação entre os clientes externos e os servidores internos. Ele funciona como uma camada de proteção entre os clientes e os servidores, melhorando a segurança, o desempenho e a escalabilidade dos serviços.
+
+O proxy reverso pode ser configurado para realizar diversas funções, como:
+
+Balanceamento de carga: distribuir o tráfego de entrada entre vários servidores de destino para melhorar o desempenho e evitar sobrecargas.
+Cache de conteúdo: armazenar em cache as respostas dos servidores de destino para fornecer conteúdo rapidamente aos clientes subsequentes, reduzindo a carga nos servidores internos.
+Criptografia SSL/TLS: atuar como um terminador SSL/TLS, permitindo que o tráfego seja criptografado entre o cliente e o proxy reverso, e entre o proxy reverso e o servidor de destino.
+Proteção contra ataques DDoS: filtrar e bloquear solicitações maliciosas ou excessivas antes que elas alcancem os servidores internos.
+Roteamento baseado em conteúdo: encaminhar as solicitações dos clientes para servidores de destino diferentes com base em informações específicas do conteúdo solicitado.
+Máscaras de servidor: ocultar detalhes da infraestrutura interna, exibindo apenas informações relevantes para os clientes externos.
+Em resumo, um proxy reverso é uma peça-chave da arquitetura de rede que ajuda a melhorar o desempenho, a segurança e a disponibilidade dos serviços ao atuar como intermediário entre os clientes externos e os servidores internos.
+
+
+
+2) Como se configura um proxy reverso no NGINX ?
+
+A configuração de um proxy reverso no NGINX envolve a criação de um servidor virtual (virtual server) e a definição das regras de encaminhamento das solicitações. Aqui está um exemplo básico de como configurar um proxy reverso no NGINX:
+
+1. Abra o arquivo de configuração do NGINX usando um editor de texto. O local do arquivo pode variar dependendo da distribuição do Linux, mas geralmente é encontrado em `/etc/nginx/nginx.conf` ou em um arquivo separado dentro do diretório `/etc/nginx/conf.d/`.
+
+2. Dentro do arquivo de configuração, localize a seção `http` e adicione o seguinte bloco de código para definir o servidor virtual:
+
+```
+server {
+    listen 80;
+    server_name seu_dominio.com;
+
+    location / {
+        proxy_pass http://endereco_do_servidor_de_destino;
+    }
+}
+```
+
+Substitua `seu_dominio.com` pelo nome de domínio ou endereço IP do seu servidor. Em `endereco_do_servidor_de_destino`, insira o endereço do servidor que você deseja encaminhar as solicitações.
+
+3. Salve e feche o arquivo de configuração.
+
+4. Reinicie o serviço do NGINX para aplicar as alterações. O comando pode variar dependendo da sua distribuição Linux, mas geralmente é algo como:
+
+```
+sudo systemctl restart nginx
+```
+
+Após essas etapas, o NGINX estará configurado como um proxy reverso. Todas as solicitações recebidas no servidor serão encaminhadas para o servidor de destino especificado na configuração. Certifique-se de ter as permissões corretas para editar o arquivo de configuração e reiniciar o serviço do NGINX.
+
+Observe que esse é apenas um exemplo básico de configuração. O NGINX oferece uma ampla gama de recursos e opções de configuração avançadas para adaptar o proxy reverso às necessidades específicas do seu ambiente. É recomendável consultar a documentação oficial do NGINX para explorar mais recursos e opções de configuração.
